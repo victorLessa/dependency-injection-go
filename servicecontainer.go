@@ -9,6 +9,7 @@ import (
 
 type IServiceContainer interface {
 	InjectBookController() controllers.BookController
+	InjectAuthController() controllers.AuthController
 }
 
 type kernel struct{}
@@ -17,10 +18,15 @@ func (k *kernel) InjectBookController() controllers.BookController {
 
 	SqlConn := databases.Connect()
 
-	playerRepository := &repositories.BookRepository{SqlConn: SqlConn}
-	playerController := controllers.BookController{Repository: playerRepository}
+	bookRepository := &repositories.BookRepository{SqlConn: SqlConn}
+	bookController := controllers.BookController{Repository: bookRepository}
 
-	return playerController
+	return bookController
+}
+func (k *kernel) InjectAuthController() controllers.AuthController {
+	userController := controllers.AuthController{}
+
+	return userController
 }
 
 var (

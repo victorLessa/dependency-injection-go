@@ -20,11 +20,11 @@ func (c *BookController) Create(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&books); err != nil {
-		c.RespondJSON(w, http.StatusBadRequest, err.Error())
+		RespondJSON(w, http.StatusBadRequest, err.Error())
 		return
 	}
 	defer r.Body.Close()
 	
 	c.Repository.Create(&books)
-	c.RespondJSON(w, http.StatusOK, books) 
+	RespondJSON(w, http.StatusOK, books) 
 }
